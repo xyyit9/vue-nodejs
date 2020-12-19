@@ -4,7 +4,6 @@
     <el-form label-width="100px" @submit.native.prevent="save">
         <el-form-item label="名称">
             <el-input v-model="model.name"></el-input>
-            <p>Message is: {{ model }}</p>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" native-type="submit">保存</el-button>
