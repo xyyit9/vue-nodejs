@@ -13,7 +13,9 @@ const routes = [
     name: 'Main',
     component: Main,
     children:[
+      // 不同的router使用同一个组件
       {path: '/categories/create', component:CategoryEdit},
+      {path: '/categories/edit/:id', component:CategoryEdit, props: true},
       {path: '/categories/list', component:CategoryList}
     ]
   },
