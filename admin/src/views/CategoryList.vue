@@ -10,7 +10,7 @@
       label="操作"
       width="180">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="$router.push(`rest/categories/edit/${scope.row._id}`)">编辑</el-button>
+        <el-button type="text" size="small" @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
         <el-button type="text" size="small" @click="remove(scope.row)">删除</el-button>
       </template>
     </el-table-column>
