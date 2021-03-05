@@ -1,6 +1,8 @@
 <template>
   <div class="about">
     <h1>{{ id ? "编辑" : "新建" }}分类</h1>
+    <!-- form标签有默认行为，当子组件中含有单个input组件时，输入回车后会自动提交表单，使用
+    @submit.native.prevent="save"可以阻止此行为 -->
     <el-form label-width="100px" @submit.native.prevent="save">
       <el-form-item label="上级分类">
         <el-select v-model="model.parent">
@@ -35,13 +37,11 @@ export default {
   },
   methods: {
     async save() {
-      let res;
       if (this.id) {
-        res = await this.$http.put(`rest/categories/${this.id}`, this.model);
+        await this.$http.put(`rest/categories/${this.id}`, this.model);
       } else {
-        res = await this.$http.post("rest/categories", this.model);
+        await this.$http.post("rest/categories", this.model);
       }
-      console.log(res);
       this.$router.push("/categories/list");
       this.$message({
         type: "success",

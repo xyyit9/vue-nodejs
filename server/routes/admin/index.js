@@ -16,6 +16,7 @@ module.exports = (app) => {
   })
   router.get('/', async (req, res) => {
     const queryOptions = {}
+    // 接口是通用接口，但可扩展，如果模型是个Category，还需要关联查找parent
     if(req.Model.modelName === 'Category'){
       queryOptions.populate = 'parent'
 
@@ -27,9 +28,12 @@ module.exports = (app) => {
     const model = await req.Model.findById(req.params.id)
     res.send(model)
   })
+  // resource是动态model
   app.use(
     '/admin/api/rest/:resource',
+    // 添加中间键
     async (req, res, next) => {
+      // inflection用于处理转类名、下划线等处理
       const modelName = require('inflection').classify(req.params.resource)
       req.Model = require(`../../models/${modelName}`)
       next()
