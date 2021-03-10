@@ -82,7 +82,6 @@ export default {
       this.$set(this.model, 'icon', res.url)
       // 一开始在data里并不存在icon,所以vue可能存在赋值赋不可以使用this.$set强制显示声明
       this.model.icon = res.url
-      console.log(res);
     },
   },
   created() {

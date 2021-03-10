@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>{{ id ? "编辑" : "新建" }}物品</h1>
+    <h1>{{ id ? "编辑" : "新建" }}英雄</h1>
     <el-form label-width="100px" @submit.native.prevent="save">
       <el-form-item label="名称">
         <el-input v-model="model.name"></el-input>
@@ -13,7 +13,7 @@
           :show-file-list="false"
           :on-success="afterUpload"
         >
-          <img v-if="model.icon" :src="model.icon" class="avatar" />
+          <img v-if="model.avatar" :src="model.avatar" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -58,31 +58,34 @@ export default {
   },
   data() {
     return {
-      model: {},
+      model: {
+        name: '',
+        avatar: ''
+      },
     };
   },
   methods: {
     async save() {
       if (this.id) {
-        await this.$http.put(`rest/items/${this.id}`, this.model);
+        await this.$http.put(`rest/heros/${this.id}`, this.model);
       } else {
-        await this.$http.post("rest/items", this.model);
+        await this.$http.post("rest/heros", this.model);
       }
-      this.$router.push("/items/list");
+      this.$router.push("/heros/list");
       this.$message({
         type: "success",
         message: "保存成功",
       });
     },
     async fetch() {
-      const res = await this.$http.get(`rest/item/${this.id}`);
+      const res = await this.$http.get(`rest/heros/${this.id}`);
       this.model = res.data;
     },
     afterUpload(res) {
-      this.$set(this.model, 'icon', res.url)
-      // 一开始在data里并不存在icon,所以vue可能存在赋值赋不上的情况，可以使用this.$set强制显示声明
-      this.model.icon = res.url
-      console.log(res);
+      // 一开始在data里并不存在icon,所以vue可能存在赋值赋不上的情况
+      // 1. 可以使用this.$set强制显示声明
+      // 2. 可以在data中协商icon属性
+      this.model.avatar = res.url
     },
   },
   created() {
