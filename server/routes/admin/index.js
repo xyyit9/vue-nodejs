@@ -17,9 +17,8 @@ module.exports = (app) => {
   router.get('/', async (req, res) => {
     const queryOptions = {}
     // 接口是通用接口，但可扩展，如果模型是个Category，还需要关联查找parent
-    if(req.Model.modelName === 'Category'){
-      queryOptions.populate = 'parent'
-
+    if (req.Model.modelName === 'Category') {
+      queryOptions.populate = 'parent' 
     }
     const items = await req.Model.find().setOptions(queryOptions).limit(10)
     res.send(items)
@@ -40,4 +39,12 @@ module.exports = (app) => {
     },
     router
   )
+  const multer = require('multer')
+  const upload = multer({ dest: __dirname + '/../../uploads' })
+  // upload.single('file')中间件，让req上存在file属性，做到可以上传图片
+  app.post('/admin/api/upload', upload.single('file'), async (req, res) => {
+    const file = req.file
+    file.url= `http://localhost:3000/uploads/${file.filename}`
+    res.send(file)
+  })
 }

@@ -75,12 +75,12 @@ export default {
       });
     },
     async fetch() {
-      const res = await this.$http.get(`rest/items/${this.id}`);
+      const res = await this.$http.get(`rest/item/${this.id}`);
       this.model = res.data;
     },
     afterUpload(res) {
       this.$set(this.model, 'icon', res.url)
-      // 一开始在data里并不存在icon,所以vue可能存在赋值赋不可以使用this.$set强制显示声明
+      // 一开始在data里并不存在icon,所以vue可能存在赋值赋不上的情况，可以使用this.$set强制显示声明
       this.model.icon = res.url
       console.log(res);
     },
