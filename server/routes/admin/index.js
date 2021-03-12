@@ -39,6 +39,7 @@ module.exports = (app) => {
     },
     router
   )
+  //Multer 是一个 node.js 中间件，用于处理 multipart/form-data 类型的表单数据，它主要用于上传文件。
   const multer = require('multer')
   const upload = multer({ dest: __dirname + '/../../uploads' })
   // upload.single('file')中间件，让req上存在file属性，做到可以上传图片
@@ -47,4 +48,9 @@ module.exports = (app) => {
     file.url= `http://localhost:3000/uploads/${file.filename}`
     res.send(file)
   })
+
+  app.post('admin/api/login',async (req, res)=>{
+
+  })
+
 }
