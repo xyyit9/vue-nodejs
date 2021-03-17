@@ -9,7 +9,8 @@
         <!-- $http.defaults.baseURL是一个变量，表示当前的地址 -->
         <el-upload
           class="avatar-uploader"
-          :action="$http.defaults.baseURL + '/upload'"
+          :action="uploadUrl"
+          :headers="getAuthHeaders()"
           :show-file-list="false"
           :on-success="afterUpload"
         >
